@@ -1,0 +1,16 @@
+<small>
+  {% if ok %}
+    ✅ {{ message }} &middot; last sync: <strong>{{ last_sync_at }}</strong>
+  {% else %}
+    ⚠️ {{ message }}
+  {% endif %}
+</small>
+<button
+  hx-post="/sync"
+  hx-target="#sync-status"
+  hx-swap="innerHTML"
+  hx-indicator="#sync-spinner"
+>
+  Sync now
+</button>
+<span id="sync-spinner" class="htmx-indicator">syncing&hellip;</span>

@@ -1,0 +1,50 @@
+{% set results = results | default([]) %}
+{% set query = query | default("") %}
+
+{% if results %}
+<p><small>{{ results | length }} record{{ "s" if results | length != 1 else "" }}{% if query %} matching "{{ query }}"{% endif %}</small></p>
+<div style="overflow-x: auto;">
+  <table>
+    <thead>
+      <tr>
+        <th>VM name</th>
+        <th>Status</th>
+        <th>vCPU</th>
+        <th>RAM (GiB)</th>
+        <th>Disk (GiB)</th>
+        <th>Tags</th>
+        <th>Wazuh installed</th>
+        <th>Comment</th>
+        <th>IP address</th>
+        <th>DNS name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in results %}
+      <tr>
+        <td>{{ r.vm_name or "—" }}</td>
+        <td>{{ r.vm_status or "" }}</td>
+        <td>{{ r.vm_vcpus or "" }}</td>
+        <td>{{ r.vm_memory_gib or "" }}</td>
+        <td>{{ r.vm_disk_gib or "" }}</td>
+        <td class="truncate">{{ r.vm_tags or "" }}</td>
+        <td>{{ r.vm_wazuh_installed or "" }}</td>
+        <td class="truncate" title="{{ r.vm_comments or '' }}">{{ r.vm_comments or "" }}</td>
+        <td>{{ r.ip_address or "—" }}</td>
+        <td>{{ r.dns_name or "—" }}</td>
+        <td>
+          {% if r.netbox_url %}
+            <a href="{{ r.netbox_url }}" target="_blank" rel="noopener">open ↗</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% elif query %}
+  <p><small>No matches for "{{ query }}".</small></p>
+{% else %}
+  <p><small>No data synced yet &mdash; hit "Sync now" above once your NetBox URL/token are set.</small></p>
+{% endif %}

@@ -1,0 +1,91 @@
+/* Bakes in the same compactness as manually zooming the browser to 50%,
+   so it loads at this size by default instead of requiring Ctrl+- each time.
+   Note: `zoom` works in Chrome/Edge/Safari but not Firefox - if you need
+   cross-browser support, swap this for a `transform: scale(0.65)` on <html>
+   with a matching `width: 154%` compensation instead. */
+html {
+  zoom: 50%;
+}
+
+/* Pico's defaults are sized for a marketing page, not a dense data table.
+   Scaling the root font shrinks everything (headings, spacing, buttons)
+   proportionally since Pico is built on rem units. */
+:root {
+  font-size: 14px;
+}
+
+.container {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+hgroup h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.15rem;
+}
+hgroup p {
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.sync-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.sync-bar small {
+  font-size: 0.8rem;
+}
+.sync-bar button {
+  width: auto;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+input[type="search"] {
+  height: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+#results > p {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+table {
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+table th,
+table td {
+  padding: 0.35rem 0.6rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+table th {
+  white-space: nowrap;
+}
+
+/* Long tags/comments would otherwise wrap to several lines and blow up row
+   height - clip to one line with an ellipsis, full text on hover via title. */
+table td.truncate {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.htmx-indicator {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+  font-size: 0.8rem;
+}
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+  opacity: 1;
+}

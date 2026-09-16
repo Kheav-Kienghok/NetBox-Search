@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<hgroup>
+  <h1>NetBox Search</h1>
+  <p>Fuzzy search across VMs, interfaces, and IP addresses</p>
+</hgroup>
+
+<div id="sync-status" class="sync-bar">
+  <small>
+    {% if last_sync_at %}
+      Last sync: <strong>{{ last_sync_at }}</strong> &middot; {{ last_sync_count }} records indexed
+      &middot; auto-refreshes every {{ sync_interval_hours }}h
+    {% else %}
+      No successful sync yet &mdash; check your NetBox URL/token, then hit "Sync now".
+    {% endif %}
+  </small>
+  <button
+    hx-post="/sync"
+    hx-target="#sync-status"
+    hx-swap="innerHTML"
+    hx-indicator="#sync-spinner"
+  >
+    Sync now
+  </button>
+  <span id="sync-spinner" class="htmx-indicator">syncing&hellip;</span>
+</div>
+
+<input
+  type="search"
+  name="q"
+  placeholder="Search IP, VM name, interface, MAC, description&hellip;"
+  hx-get="/search"
+  hx-trigger="keyup changed delay:300ms, search"
+  hx-target="#results"
+  hx-swap="innerHTML"
+  autofocus
+>
+
+<div id="results">
+  {% include "partials/results.html" %}
+</div>
+
+{% endblock %}

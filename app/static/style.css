@@ -4,7 +4,7 @@
    cross-browser support, swap this for a `transform: scale(0.65)` on <html>
    with a matching `width: 154%` compensation instead. */
 html {
-  zoom: 50%;
+  zoom: 100%;
 }
 
 /* Pico's defaults are sized for a marketing page, not a dense data table.
